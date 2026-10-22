@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="nl" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dikshonario Hurídiko / Juridisch Woordenboek Nederlands ↔ Papiamentu (UoC)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        uoc: {
+                            blue: '#003366',
+                            teal: '#008B8B',
+                            gold: '#FFC000',
+                            accent: '#1e3a8a',
+                            bg: '#f8fafc'
+                        },
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            500: '#334e68',
+                            800: '#102a43',
+                            900: '#0b1b2b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Georgia', 'Merriweather', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Inter & Merriweather -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif-title { font-family: 'Merriweather', serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Header / Navigatie -->
+    <header class="bg-uoc-blue text-white shadow-lg sticky top-0 z-40 border-b border-navy-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- Logo & Titel -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('search'); resetSearch();">
+                    <div class="p-2 bg-uoc-teal rounded-lg shadow-inner text-white font-bold border border-white/20 flex flex-col items-center justify-center min-w-[42px]">
+                        <span class="text-xs tracking-tighter uppercase font-extrabold">UoC</span>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-xl font-bold tracking-tight serif-title flex items-center gap-2">
+                            Dikshonario Hurídiko
+                            <span class="hidden md:inline-block text-[10px] font-sans font-semibold px-2 py-0.5 bg-uoc-teal text-white rounded-full border border-white/20">University of Curaçao</span>
+                        </h1>
+                        <p class="text-xs text-slate-300 hidden sm:block">Juridisch woordenboek Nederlands-Papiamentu / Hulandes-Papiamentu</p>
+                    </div>
+                </div>
+
+                <!-- Navigatiemenu -->
+                <nav class="flex items-center space-x-1 sm:space-x-3 text-xs sm:text-sm font-medium">
+                    <button onclick="switchTab('search')" id="nav-search" class="px-3 py-2 rounded-md bg-white/10 text-white flex items-center gap-1.5 transition">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Zoeken</span>
+                    </button>
+                    <button onclick="switchTab('alphabet')" id="nav-alphabet" class="px-3 py-2 rounded-md hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">A-Z Index</span>
+                    </button>
+                    <button onclick="switchTab('favorites')" id="nav-favorites" class="px-3 py-2 rounded-md hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition">
+                        <i data-lucide="bookmark" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Bewaard</span>
+                        <span id="fav-count" class="ml-1 px-1.5 py-0.2 bg-amber-500 text-slate-900 rounded-full text-[10px] font-bold">0</span>
+                    </button>
+                    <button onclick="switchTab('admin')" id="nav-admin" class="px-3 py-2 rounded-md hover:bg-white/10 text-slate-200 flex items-center gap-1.5 transition">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Toevoegen</span>
+                    </button>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-md hover:bg-white/10 text-slate-200 transition" title="Wissel Donkere Modus">
+                        <i data-lucide="moon" id="theme-icon" class="w-4 h-4"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB 1: ZOEKPAGINA -->
+        <div id="tab-search" class="space-y-6">
+            
+            <!-- Hero / Banner -->
+            <div class="bg-gradient-to-r from-uoc-blue via-navy-800 to-uoc-teal text-white rounded-2xl p-6 sm:p-8 shadow-md relative overflow-visible border border-slate-700">
+                <div class="max-w-3xl relative z-20">
+                    <div class="flex items-center gap-2 mb-2 text-amber-300 font-medium text-xs sm:text-sm">
+                        <i data-lucide="award" class="w-4 h-4"></i> Officieel Juridisch Woordenboek (UoC)
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-bold serif-title mb-2 leading-tight">
+                        Dikshonario Hurídiko
+                    </h2>
+                    <p class="text-xs sm:text-sm font-medium text-teal-200 mb-3">
+                        Prof. mr. Lodewijk Rogier • Prof. dr. Ronald Severing • Mr. dr. Annemarie Marchena-Slot
+                    </p>
+                    <p class="text-slate-200 text-xs sm:text-base mb-6 max-w-2xl">
+                        Geautoriseerde juridische vertalingen, inclusief meervoudsvormen, grammatica, wetboekreferenties (BW, DCC, Sv, Lar, Statuut, Sr) en definities.
+                    </p>
+
+                    <!-- Zoekbalk & Richting Schakelaar -->
+                    <div class="space-y-3 relative z-30">
+                        <div class="flex items-center gap-2 text-xs font-semibold">
+                            <span class="text-slate-300">Zoekrichting:</span>
+                            <button id="dir-nl-pap" onclick="setDirection('NL-PAP')" class="px-3 py-1 bg-amber-400 text-slate-900 rounded-full font-bold shadow-sm">
+                                Nederlands ➔ Papiamentu
+                            </button>
+                            <button id="dir-pap-nl" onclick="setDirection('PAP-NL')" class="px-3 py-1 bg-white/20 text-white hover:bg-white/30 rounded-full font-medium transition">
+                                Papiamentu ➔ Nederlands
+                            </button>
+                        </div>
+
+                        <!-- Invoerveld + Suggesties Container -->
+                        <div class="relative z-40">
+                            <div class="relative flex items-center">
+                                <i data-lucide="search" class="absolute left-4 w-5 h-5 text-slate-400"></i>
+                                <input type="text" id="search-input" 
+                                    oninput="handleSearchInput(this.value)"
+                                    placeholder="Zoek een juridische term (bijv. aanbod, akshon, destaho, vonnis)..." 
+                                    class="w-full pl-12 pr-10 py-3.5 bg-white text-slate-900 dark:bg-slate-900 dark:text-white rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-400 text-sm sm:text-base">
+                                <button id="clear-search" onclick="resetSearch()" class="hidden absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                                    <i data-lucide="x-circle" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+
+                            <!-- Auto-complete / Suggesties Dropdown -->
+                            <div id="suggestions-box" class="hidden absolute z-50 left-0 right-0 mt-1.5 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 max-h-72 overflow-y-auto custom-scrollbar divide-y divide-slate-100 dark:divide-slate-800">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categorieën Filter -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar text-xs">
+                <span class="font-semibold text-slate-500 dark:text-slate-400 whitespace-nowrap">Filter op vakgebied:</span>
+                <button onclick="filterCategory('ALL')" class="cat-btn px-3 py-1.5 rounded-lg bg-uoc-blue text-white font-medium shadow-sm whitespace-nowrap">
+                    Alles
+                </button>
+                <button onclick="filterCategory('Burgerlijk recht')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300 transition whitespace-nowrap">
+                    Burgerlijk recht (BW/DCC)
+                </button>
+                <button onclick="filterCategory('Strafrecht')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300 transition whitespace-nowrap">
+                    Strafrecht (Sr/Sv)
+                </button>
+                <button onclick="filterCategory('Bestuursrecht')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300 transition whitespace-nowrap">
+                    Bestuursrecht (Lar)
+                </button>
+                <button onclick="filterCategory('Staatsrecht')" class="cat-btn px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300 transition whitespace-nowrap">
+                    Staatsrecht (Statuut)
+                </button>
+            </div>
+
+            <!-- Resultaten Layout: Lijst + Detailvenster Paneel -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Linkerkolom: Resultatenlijst -->
+                <div class="lg:col-span-5 space-y-3">
+                    <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+                        <span id="results-count">Laden...</span>
+                        <span>Klik om details te bekijken</span>
+                    </div>
+
+                    <!-- Compacte scrollbare lijst met vaste maximale hoogte -->
+                    <div id="results-list" class="space-y-2 max-h-[580px] overflow-y-auto pr-1.5 custom-scrollbar border border-slate-200/60 dark:border-slate-800 rounded-xl p-1 bg-slate-100/50 dark:bg-slate-900/50">
+                        <!-- Wordt dynamisch gevuld -->
+                    </div>
+
+                    <!-- Optionele knop voor meer resultaten bij grote lijsten -->
+                    <div id="load-more-container" class="hidden text-center pt-1">
+                        <button onclick="loadMoreResults()" class="text-xs px-4 py-2 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg font-medium transition">
+                            Laad meer termen...
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rechterkolom: Interactief Detailpaneel -->
+                <div class="lg:col-span-7">
+                    <div id="detail-card" class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800 sticky top-24">
+                        <div class="text-center py-12 text-slate-400">
+                            <i data-lucide="book-open-check" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
+                            <p class="text-sm">Selecteer een juridische term uit de lijst om de meervoudsvorm, grammatica, definities en wetboekreferenties te bekijken.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 2: ALFABETISCHE INDEX -->
+        <div id="tab-alphabet" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800">
+                <h3 class="text-lg font-bold text-uoc-blue dark:text-teal-400 mb-4 flex items-center gap-2">
+                    <i data-lucide="alphabet" class="w-5 h-5"></i>
+                    Alfabetische Index (A - Z)
+                </h3>
+                
+                <!-- Knoppen A-Z -->
+                <div id="alphabet-bar" class="flex flex-wrap gap-1.5 pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <!-- A-Z Knoppen via JS -->
+                </div>
+
+                <!-- Resultaten per letter -->
+                <div class="mt-6">
+                    <h4 id="alphabet-title" class="text-xl font-bold text-slate-800 dark:text-white mb-4">Letter A</h4>
+                    <div id="alphabet-results" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Woorden per letter via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: BEWAARDE TERMEN / FAVORITEN -->
+        <div id="tab-favorites" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-uoc-blue dark:text-teal-400 flex items-center gap-2">
+                        <i data-lucide="bookmark" class="w-5 h-5"></i>
+                        Mijn Bewaarde Juridische Termen
+                    </h3>
+                    <button onclick="clearFavorites()" class="text-xs text-rose-600 hover:underline flex items-center gap-1">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Alles wissen
+                    </button>
+                </div>
+
+                <div id="favorites-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Favorieten via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: TERM TOEVOEGEN / UITBREIDEN -->
+        <div id="tab-admin" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800 max-w-3xl mx-auto">
+                <h3 class="text-lg font-bold text-uoc-blue dark:text-teal-400 mb-2 flex items-center gap-2">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                    Nieuwe Juridische Term Toevoegen
+                </h3>
+                <p class="text-xs text-slate-500 mb-6">Voeg nieuwe termen toe aan de lokale woordenbank met meervoudsvormen.</p>
+
+                <form id="add-term-form" onsubmit="handleAddTerm(event)" class="space-y-4 text-xs sm:text-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1">Nederlands Trefwoord *</label>
+                            <input type="text" id="add-nl" required placeholder="bijv. Eigendom" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Papiamentu Vertaling *</label>
+                            <input type="text" id="add-pap" required placeholder="bijv. Propiedad" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1">Papiamentu Meervoud</label>
+                            <input type="text" id="add-pap-plural" placeholder="bijv. (~nan)" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Grammatica / Lidwoord (NL)</label>
+                            <input type="text" id="add-grammar" placeholder="het, mv. ~en" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1">Vakgebied / Categorie</label>
+                            <select id="add-category" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                                <option value="Burgerlijk recht">Burgerlijk recht</option>
+                                <option value="Strafrecht">Strafrecht</option>
+                                <option value="Bestuursrecht">Bestuursrecht</option>
+                                <option value="Staatsrecht">Staatsrecht</option>
+                                <option value="Algemeen recht">Algemeen recht</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1">Jurisdictie / Wetartikel</label>
+                            <input type="text" id="add-jurisdiction" placeholder="art. 5:1 BW / DCC" class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold mb-1">Nederlandse Definitie</label>
+                        <textarea id="add-def-nl" rows="2" placeholder="Omschrijving van het begrip..." class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold mb-1">Papiamentu Definitie</label>
+                        <textarea id="add-def-pap" rows="2" placeholder="Deskripshon di e konsepto..." class="w-full p-2.5 rounded-lg border dark:bg-slate-800 border-slate-300 dark:border-slate-700"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+                        <button type="submit" class="px-5 py-2.5 bg-uoc-teal text-white font-bold rounded-lg hover:bg-teal-700 transition">
+                            Opslaan in Woordenboek
+                        </button>
+
+                        <button type="button" onclick="exportData()" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-300 transition flex items-center gap-1.5">
+                            <i data-lucide="download" class="w-4 h-4"></i> Exporteer JSON
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-slate-400 border-t border-navy-800 py-8 mt-auto text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <p class="font-medium text-slate-300">
+                Dikshonario Hurídiko / Juridisch Woordenboek Nederlands ↔ Papiamentu &copy; 2026
+            </p>
+            <p class="text-amber-400 font-semibold">
+                University of Curaçao (UoC) • Prof. mr. Lodewijk Rogier • Prof. dr. Ronald Severing • Mr. dr. Annemarie Marchena-Slot
+            </p>
+            <p class="max-w-2xl mx-auto text-slate-500">
+                Gebaseerd op de officiële juridische terminologiestandaarden voor Curaçao, Aruba, Sint Maarten, Caribisch Nederland en Nederland (BW, DCC, Sv, Sr, Lar, Statuut).
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS LOGICA -->
+    <script>
+        // DATABANK MET EXACTE GEGEVENS UIT DE UOC PROEFPAGINA INCLUSIEF MEERVOUD
+        const OFFICIAL_DICTIONARY = [
+            {
+                id: "a-priori",
+                nl: "a priori",
+                pap: "delantá, adelantá, di antemano",
+                papPlural: "()",
+                grammar: "bijw.",
+                category: "Algemeen recht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Van tevoren, vooraf.",
+                defPAP: "Adelantá, di antemano.",
+                exNL: "A priori kan de rechter hier nog geen oordeel over velden.",
+                exPAP: "Di antemano e hues no por duna un veredikto riba esaki."
+            },
+            {
+                id: "aanbesteding-openbare",
+                nl: "aanbesteding, openbare ~",
+                pap: "destaho, kontratashon (públiko)",
+                papPlural: "(~nan)",
+                grammar: "(de, v, mv. ~en)",
+                category: "Bestuursrecht",
+                jurisdiction: "Curaçao, Aruba, St. Maarten, BES, NL",
+                defNL: "Verkrijgen van prijsopgaven voor uitvoering of onderhoud van werken.",
+                defPAP: "Optenshon di preis pa ehekushon òf mantenshon di obra.",
+                exNL: "De overheid schreef een openbare aanbesteding uit voor het wegenonderhoud.",
+                exPAP: "Gobièrnu a hinka un destaho públiko pa mantenshon di kaminda."
+            },
+            {
+                id: "aanbod",
+                nl: "aanbod",
+                pap: "oferta",
+                papPlural: "(~nan)",
+                grammar: "(het, mv. ~en)",
+                category: "Burgerlijk recht",
+                jurisdiction: "art. 6:217 BW / DCC",
+                defNL: "Rechtshandeling welk door aanvaarding tot een overeenkomst leidt (art. 6:217 BW).",
+                defPAP: "Akto hurídiko ku ta hiba na un akuerdo ora e keda aseptá (art. 6:217 DCC).",
+                exNL: "Het aanbod vervalt wanneer het wordt verworpen.",
+                exPAP: "E oferta ta keda sin efekto ora e keda rechasá."
+            },
+            {
+                id: "aandeel",
+                nl: "aandeel",
+                pap: "akshon",
+                papPlural: "(~nan)",
+                grammar: "(het, mv. ~en)",
+                category: "Burgerlijk recht",
+                jurisdiction: "art. 2:79 BW / DCC",
+                defNL: "Het recht op een evenredig deel in het kapitaal van een vennootschap (art. 2:79 BW).",
+                defPAP: "Derecho riba un partisipashon proporshonal den kapital di un empresa (art. 2:79 DCC).",
+                exNL: "Aandelen op naam zijn overgedragen via een notariële akte.",
+                exPAP: "Akshonnan riba nòmber a keda traspasá pa medio di un akta notarial."
+            },
+            {
+                id: "aandeelhouder",
+                nl: "aandeelhouder",
+                pap: "akshonista",
+                papPlural: "(~nan)",
+                grammar: "(de, m, mv. ~s)",
+                category: "Burgerlijk recht",
+                jurisdiction: "art. 2:81 BW / DCC",
+                defNL: "Rechthebbende op een aandeel (art. 2:81 BW).",
+                defPAP: "Titular di un akshon (art. 2:81 DCC).",
+                exNL: "De aandeelhouder heeft stemrecht tijdens de vergadering.",
+                exPAP: "E akshonista tin derecho di voto durante e reunion."
+            },
+            {
+                id: "aandeelhoudersvergadering",
+                nl: "aandeelhoudersvergadering",
+                pap: "reunion di akshonista",
+                papPlural: "(~nan)",
+                grammar: "(de, v, mv. ~en)",
+                category: "Burgerlijk recht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Zie algemene vergadering van aandeelhouders.",
+                defPAP: "Mira hunta general di akshonista / algemene vergadering van aandeelhouders.",
+                exNL: "De aandeelhoudersvergadering werd bijeengeroepen door het bestuur.",
+                exPAP: "E reunion di akshonista a keda konvoká pa e direktiva."
+            },
+            {
+                id: "aandelenregister",
+                nl: "aandelenregister",
+                pap: "registro di akshon",
+                papPlural: "(~nan)",
+                grammar: "(het, mv. ~s)",
+                category: "Burgerlijk recht",
+                jurisdiction: "art. 2:85 BW / DCC",
+                defNL: "Register van een NV of BV waarin de namen van alle aandeelhouders zijn opgenomen (art. 2:85 BW).",
+                defPAP: "Registro di un NV òf un BV den kua ta nota nòmber di tur akshonista (art. 2:85 DCC).",
+                exNL: "Het aandelenregister moet zorgvuldig worden bijgehouden.",
+                exPAP: "Mester tene e registro di akshon debidamente al día."
+            },
+            {
+                id: "aanhouden-heterdaad",
+                nl: "aanhouden",
+                pap: "arestá, detené",
+                papPlural: "()",
+                grammar: "ww.",
+                category: "Strafrecht",
+                jurisdiction: "art. 73 Sv",
+                defNL: "Feitelijk vasthouden van een verdachte in geval van ontdekking op heterdaad van een strafbaar feit (art. 73 Sv).",
+                defPAP: "Detenshon de facto di un sospechoso den kaso di deskubrimentu di un delito (art. 73 Sv).",
+                exNL: "Ieder is bevoegd een verdachte op heterdaad aan te houden.",
+                exPAP: "Kualke persona ta outorisá pa arestá un sospechoso en akto kometiendo e delito."
+            },
+            {
+                id: "aanspraak",
+                nl: "aanspraak",
+                pap: "derecho",
+                papPlural: "(~nan)",
+                grammar: "(de, v, mv. ~en)",
+                category: "Burgerlijk recht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Het recht om het bezit of genot van iets te vorderen.",
+                defPAP: "Derecho pa reklamá poseshon òf goso/disfrute di algu.",
+                exNL: "Zij maakt aanspraak op de erfenis.",
+                exPAP: "E ta reklamá e derecho riba e heredensia."
+            },
+            {
+                id: "aanbiedingsbrief",
+                nl: "aanbiedingsbrief",
+                pap: "karta di oferta",
+                papPlural: "(~nan)",
+                grammar: "(de, v, mv. ~ven)",
+                category: "Bestuursrecht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Begeleidende brief (bijv. bij een rechtshulpverzoek of een rapport).",
+                defPAP: "Karta di presentashon (por ehèmpel, den kaso di un solisitut pa asistensia hurídiko òf un informe).",
+                exNL: "Het rapport werd toegezonden met een officiële aanbiedingsbrief.",
+                exPAP: "E informe a keda mandá ku un karta di presentashon ofisial."
+            },
+            {
+                id: "aangelegenheid-eigen-koninkrijk",
+                nl: "aangelegenheid, eigen ~; ~ van het Koninkrijk",
+                pap: "asuntu, propio di Reino",
+                papPlural: "()",
+                grammar: "(de, v, mv. ~heden)",
+                category: "Staatsrecht",
+                jurisdiction: "art. 3 Statuut",
+                defNL: "Onderwerpen waarvoor het Koninkrijk verantwoordelijk is (art. 3 Statuut).",
+                defPAP: "Materia pa kua Reino ta responsabel (artíkulo 3 di Estatuto).",
+                exNL: "Defensie is een aangelegenheid van het Koninkrijk.",
+                exPAP: "Defensa ta un asuntu di Reino."
+            },
+            {
+                id: "aangetekende-brief",
+                nl: "aangetekende brief",
+                pap: "karta sertifiká, registrá, segurá",
+                papPlural: "(~nan)",
+                grammar: "(brief: de, v, mv. ~ven)",
+                category: "Bestuursrecht",
+                jurisdiction: "art. 5 Lar",
+                defNL: "Belangrijke brief die onder zekerheid van verzending en aankomst wordt verzonden (bijv. bij een kennisgeving, art. 5 Lar).",
+                defPAP: "Karta importante ku ta mandá bou di seguridat di envio i yegada (por ehèmpel, den kaso di un notifikashon, art. 5 Lar).",
+                exNL: "De brief is aangetekend verzonden.",
+                exPAP: "E karta a keda mandá pa medio di un karta sertifiká."
+            },
+            {
+                id: "aangeven-iemand",
+                nl: "aangeven, iemand ~",
+                pap: "denunsiá, un hende",
+                papPlural: "()",
+                grammar: "ww.",
+                category: "Strafrecht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Aan een opsporingsambtenaar bekendmaken dat iemand een strafbaar feit heeft gepleegd.",
+                defPAP: "Informá un ofisial di investigashon ku un hende a kometé un delito penal.",
+                exNL: "Het slachtoffer besloot de dader direct aan te geven.",
+                exPAP: "E víktima a desidí di denunsiá e kulpabel mesora."
+            },
+            {
+                id: "aangever",
+                nl: "aangever",
+                pap: "denunsiante",
+                papPlural: "(~nan)",
+                grammar: "(de, m, mv. ~s)",
+                category: "Strafrecht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Degene die het strafbare feit meldt aan een opsporingsambtenaar om een strafvervolging in gang te zetten.",
+                defPAP: "E persona ku ta denunsiá e delito na un ofisial di investigashon pa por inisiá un proseso penal.",
+                exNL: "De aangever heeft een verklaring afgelegd.",
+                exPAP: "E denunsiante a duna un deklarashon."
+            },
+            {
+                id: "aangezochte-staat",
+                nl: "aangezochte staat",
+                pap: "estado solisitá",
+                papPlural: "()",
+                grammar: "(de, v)",
+                category: "Strafrecht",
+                jurisdiction: "Internationaal recht",
+                defNL: "Staat waarmee een verdrag is gesloten en waaraan wordt verzocht mee te werken aan uitlevering of overlevering.",
+                defPAP: "Estado ku kua a sera un tratado i na kua ta pidi kooperashon pa ekstradishon òf entrega.",
+                exNL: "De aangezochte staat verleent rechtshulp.",
+                exPAP: "E estado solisitá ta duna asistensia hurídiko."
+            },
+            {
+                id: "aangifte",
+                nl: "aangifte",
+                pap: "denunsia",
+                papPlural: "(~nan)",
+                grammar: "(de, v, mv. ~n)",
+                category: "Strafrecht",
+                jurisdiction: "art. 199 Sv",
+                defNL: "Melding van een strafbaar feit: het bekendmaken daarvan aan een opsporingsambtenaar (art. 199 Sv).",
+                defPAP: "Denunsia di un delito penal: notifikashon di esaki na un funshonario di investigashon (art. 199 Sv).",
+                exNL: "Er is aangifte gedaan bij de politie.",
+                exPAP: "A hasi denunsia na warda di polis."
+            },
+            {
+                id: "aangifte-valse",
+                nl: "aangifte, valse ~ doen",
+                pap: "denunsia, hasi denunsia falsu",
+                papPlural: "()",
+                grammar: "uitdrukking",
+                category: "Strafrecht",
+                jurisdiction: "art. 2:142 Sr",
+                defNL: "Melding van een strafbaar feit, terwijl men weet dat dat niet gepleegd is (art. 2:142 Sr).",
+                defPAP: "Hasi denunsia di un delito penal, miéntras bo sa ku no a kometé e delito (art. 2:142 Sr).",
+                exNL: "Het doen van valse aangifte is strafbaar.",
+                exPAP: "Hasi un denunsia falsu ta un delito penal."
+            },
+            {
+                id: "aanhangig-maken",
+                nl: "aanhangig maken / zijn",
+                pap: "entamá, presentá / ta pendiente",
+                papPlural: "()",
+                grammar: "uitdrukking",
+                category: "Bestuursrecht",
+                jurisdiction: "art. 258 Sv",
+                defNL: "Ter behandeling bij de rechter indienen van een zaak (o.a. art. 258 Sv).",
+                defPAP: "Someté tratamentu di un kaso na hues (entre otro, artíkulo 258 Sv).",
+                exNL: "De zaak is aanhangig gemaakt.",
+                exPAP: "E kaso a keda entamá."
+            },
+            {
+                id: "aanhouden-verdachte",
+                nl: "aanhouden / aangehouden worden (verdachte)",
+                pap: "detené / keda detené (sospechoso)",
+                papPlural: "()",
+                grammar: "ww.",
+                category: "Strafrecht",
+                jurisdiction: "art. 53, 54 Sv",
+                defNL: "Ontnemen van de vrijheid van een verdachte om hem te geleiden naar een plaats van verhoor (art. 53, 54 Sv).",
+                defPAP: "Privashon di libertat di un sospechoso pa hib'é na un lugá di interogashon (art. 53, 54 Sv).",
+                exNL: "De verdachte werd gisteravond aangehouden.",
+                exPAP: "E sospechoso a keda detené ayera nochi."
+            },
+            {
+                id: "aanhouden-vonnis",
+                nl: "aanhouden (vonnis)",
+                pap: "posponé, suspendé, aplasá (sentensia, veredikto)",
+                papPlural: "()",
+                grammar: "ww.",
+                category: "Bestuursrecht",
+                jurisdiction: "Alle jurisdicties",
+                defNL: "Opschorten van een uitspraak.",
+                defPAP: "Suspenshon di un fayo.",
+                exNL: "De rechter heeft het vonnis aangehouden.",
+                exPAP: "E hues a posponé e sentensia."
+            }
+        ];
+
+        // APPLICATIE STATE
+        let dictionary = [...OFFICIAL_DICTIONARY];
+        let searchDirection = 'NL-PAP'; // 'NL-PAP' of 'PAP-NL'
+        let selectedCategory = 'ALL';
+        let currentLetter = 'A';
+        let selectedTermId = null;
+        let visibleLimit = 15; // Beperk initiële weergave voor een schone layout
+        let favorites = JSON.parse(localStorage.getItem('uoc_favs') || '[]');
+
+        // INITIALISATIE NA APPLICATIE LOAD
+        window.onload = function() {
+            lucide.createIcons();
+            
+            // Laad eventueel toegevoegde items uit LocalStorage
+            const storedCustom = JSON.parse(localStorage.getItem('uoc_custom_terms') || '[]');
+            if (storedCustom.length > 0) {
+                dictionary = [...OFFICIAL_DICTIONARY, ...storedCustom];
+            }
+
+            updateFavCount();
+            renderSearchResults();
+            renderAlphabetBar();
+            renderAlphabetResults();
+            
+            // Selecteer standaard eerste item
+            if (dictionary.length > 0) {
+                selectTerm(dictionary[0].id);
+            }
+        };
+
+        // SCHAKELEN TUSSEN TABBLADEN
+        function switchTab(tab) {
+            ['search', 'alphabet', 'favorites', 'admin'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const nav = document.getElementById(`nav-${t}`);
+                if (t === tab) {
+                    el.classList.remove('hidden');
+                    if (nav) {
+                        nav.classList.add('bg-white/10', 'text-white');
+                        nav.classList.remove('text-slate-200');
+                    }
+                } else {
+                    el.classList.add('hidden');
+                    if (nav) {
+                        nav.classList.remove('bg-white/10', 'text-white');
+                        nav.classList.add('text-slate-200');
+                    }
+                }
+            });
+
+            if (tab === 'favorites') renderFavorites();
+        }
+
+        // RICHTING INSTELEN (NL-PAP / PAP-NL)
+        function setDirection(dir) {
+            searchDirection = dir;
+            const btnNL = document.getElementById('dir-nl-pap');
+            const btnPAP = document.getElementById('dir-pap-nl');
+            const input = document.getElementById('search-input');
+
+            if (dir === 'NL-PAP') {
+                btnNL.className = "px-3 py-1 bg-amber-400 text-slate-900 rounded-full font-bold shadow-sm text-xs";
+                btnPAP.className = "px-3 py-1 bg-white/20 text-white hover:bg-white/30 rounded-full font-medium transition text-xs";
+                input.placeholder = "Zoek een Nederlandse term (bijv. aanbod, aandeel, vonnis)...";
+            } else {
+                btnPAP.className = "px-3 py-1 bg-amber-400 text-slate-900 rounded-full font-bold shadow-sm text-xs";
+                btnNL.className = "px-3 py-1 bg-white/20 text-white hover:bg-white/30 rounded-full font-medium transition text-xs";
+                input.placeholder = "Zoek een Papiamentu term (bijv. akshon, oferta, destaho)...";
+            }
+
+            renderSearchResults();
+        }
+
+        // ZOEKINPUT AFHANDELING EN SUGGESTIES
+        function handleSearchInput(query) {
+            const clearBtn = document.getElementById('clear-search');
+            const suggestionsBox = document.getElementById('suggestions-box');
+
+            if (query.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+                
+                // Genereer suggesties voor dropdown
+                const filtered = filterDictionary(query);
+                if (filtered.length > 0) {
+                    suggestionsBox.classList.remove('hidden');
+                    suggestionsBox.innerHTML = filtered.slice(0, 8).map(item => {
+                        const primary = searchDirection === 'NL-PAP' ? item.nl : item.pap;
+                        const secondary = searchDirection === 'NL-PAP' ? item.pap : item.nl;
+                        const plural = item.papPlural && item.papPlural !== '()' ? `<span class="text-amber-600 dark:text-amber-400 font-bold ml-1">${item.papPlural}</span>` : '';
+
+                        return `
+                            <div onclick="selectTermFromSuggestion('${item.id}')" class="p-3 hover:bg-slate-50 dark:hover:bg-slate-800/80 cursor-pointer transition flex items-center justify-between text-left">
+                                <div class="pr-2">
+                                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5 flex-wrap">
+                                        <span>${primary}</span>
+                                        ${plural}
+                                    </div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                        <span>➔ ${secondary}</span>
+                                        ${item.grammar ? `<span class="italic text-slate-400">(${item.grammar})</span>` : ''}
+                                    </div>
+                                </div>
+                                <span class="text-[10px] font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-md border border-slate-200 dark:border-slate-700 whitespace-nowrap">${item.category}</span>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    suggestionsBox.innerHTML = `
+                        <div class="p-4 text-center text-xs text-slate-400">
+                            Geen directe suggesties voor "${query}".
+                        </div>
+                    `;
+                    suggestionsBox.classList.remove('hidden');
+                }
+            } else {
+                clearBtn.classList.add('hidden');
+                suggestionsBox.classList.add('hidden');
+            }
+
+            renderSearchResults();
+        }
+
+        function selectTermFromSuggestion(id) {
+            document.getElementById('suggestions-box').classList.add('hidden');
+            selectTerm(id);
+        }
+
+        function resetSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search').classList.add('hidden');
+            document.getElementById('suggestions-box').classList.add('hidden');
+            renderSearchResults();
+        }
+
+        // CATEGORIE FILTER
+        function filterCategory(cat) {
+            selectedCategory = cat;
+            visibleLimit = 15; // Reset limiet bij categorie wissel
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.innerText.includes(cat) || (cat === 'ALL' && btn.innerText === 'Alles')) {
+                    btn.className = "cat-btn px-3 py-1.5 rounded-lg bg-uoc-blue text-white font-medium shadow-sm whitespace-nowrap";
+                } else {
+                    btn.className = "cat-btn px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-300 transition whitespace-nowrap";
+                }
+            });
+            renderSearchResults();
+        }
+
+        // HULPFUNCTIE VOOR FILTEREN
+        function filterDictionary(query) {
+            const q = query.toLowerCase().trim();
+            return dictionary.filter(item => {
+                const matchesCat = (selectedCategory === 'ALL' || item.category === selectedCategory);
+                if (!q) return matchesCat;
+
+                const matchNL = item.nl.toLowerCase().includes(q);
+                const matchPAP = item.pap.toLowerCase().includes(q);
+                const matchDef = (item.defNL && item.defNL.toLowerCase().includes(q)) || (item.defPAP && item.defPAP.toLowerCase().includes(q));
+
+                return matchesCat && (matchNL || matchPAP || matchDef);
+            });
+        }
+
+        // RENDER RESULTATENLIJST MET BEPERKTE HOOGTE EN PAGINERING
+        function renderSearchResults() {
+            const query = document.getElementById('search-input').value;
+            const items = filterDictionary(query);
+            const listContainer = document.getElementById('results-list');
+            const countContainer = document.getElementById('results-count');
+            const loadMoreBtn = document.getElementById('load-more-container');
+
+            const displayedItems = items.slice(0, visibleLimit);
+
+            if (items.length > visibleLimit) {
+                countContainer.innerText = `Toont ${displayedItems.length} van ${items.length} termen`;
+                loadMoreBtn.classList.remove('hidden');
+            } else {
+                countContainer.innerText = `${items.length} ${items.length === 1 ? 'terme' : 'termen'} gevonden`;
+                loadMoreBtn.classList.add('hidden');
+            }
+
+            if (items.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-8 text-slate-400 bg-white dark:bg-slate-900 rounded-xl p-4">
+                        <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                        <p class="text-xs">Geen resultaten gevonden voor "${query}".</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            listContainer.innerHTML = displayedItems.map(item => {
+                const isSelected = item.id === selectedTermId;
+                const primary = searchDirection === 'NL-PAP' ? item.nl : item.pap;
+                const secondary = searchDirection === 'NL-PAP' ? item.pap : item.nl;
+                const plural = item.papPlural && item.papPlural !== '()' ? item.papPlural : '';
+
+                return `
+                    <div onclick="selectTerm('${item.id}')" 
+                        class="p-3 rounded-xl border transition cursor-pointer flex items-center justify-between ${
+                            isSelected 
+                            ? 'bg-uoc-blue text-white border-uoc-blue shadow-md dark:bg-uoc-teal dark:border-uoc-teal' 
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-uoc-teal text-slate-800 dark:text-slate-100'
+                        }">
+                        <div class="pr-2">
+                            <h4 class="font-bold text-sm leading-tight">${primary}</h4>
+                            <p class="text-xs mt-0.5 ${isSelected ? 'text-teal-100' : 'text-slate-500 dark:text-slate-400'}">
+                                ${secondary} <span class="font-semibold text-amber-500">${plural}</span>
+                            </p>
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <span class="text-[10px] px-2 py-0.5 rounded-full ${
+                                isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                            }">${item.category}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function loadMoreResults() {
+            visibleLimit += 20;
+            renderSearchResults();
+        }
+
+        // SELECTEER EEN TERM EN TOON DETAILS IN RECHTERPANEEL
+        function selectTerm(id) {
+            selectedTermId = id;
+            renderSearchResults();
+
+            const item = dictionary.find(i => i.id === id);
+            if (!item) return;
+
+            const isFav = favorites.includes(id);
+            const detailCard = document.getElementById('detail-card');
+
+            detailCard.innerHTML = `
+                <div class="space-y-6 animate-fadeIn">
+                    
+                    <!-- Header van detail -->
+                    <div class="flex items-start justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
+                        <div>
+                            <span class="text-xs font-semibold px-2.5 py-1 bg-uoc-teal/10 text-uoc-teal rounded-md inline-block mb-2">
+                                ${item.category}
+                            </span>
+                            <h2 class="text-2xl font-bold serif-title text-slate-900 dark:text-white">
+                                ${item.nl}
+                            </h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 italic mt-0.5">${item.grammar || 'juridische term'}</p>
+                        </div>
+                        <button onclick="toggleFavorite('${item.id}')" class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                            <i data-lucide="bookmark" class="w-5 h-5 ${isFav ? 'text-amber-500 fill-amber-500' : 'text-slate-400'}"></i>
+                        </button>
+                    </div>
+
+                    <!-- Vertaling Papiamentu & Meervoud -->
+                    <div class="bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-xl space-y-1">
+                        <div class="text-xs font-bold uppercase text-amber-700 dark:text-amber-400 tracking-wider">Papiamentu Vertaling</div>
+                        <div class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <span>${item.pap}</span>
+                            ${item.papPlural && item.papPlural !== '()' ? `<span class="text-base font-semibold text-amber-600 dark:text-amber-400">${item.papPlural}</span>` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Definities -->
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Nederlandse Definitie</h4>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${item.defNL}</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Papiamentu Definitie (Deskripshon)</h4>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${item.defPAP}</p>
+                        </div>
+                    </div>
+
+                    <!-- Jurisdictie & Voorbeeld -->
+                    <div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3 text-xs">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                            <span class="font-semibold text-slate-500">Wetboek / Wetartikel:</span>
+                            <span class="font-bold text-uoc-blue dark:text-teal-400">${item.jurisdiction}</span>
+                        </div>
+
+                        ${item.exNL ? `
+                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg space-y-1">
+                            <div class="font-semibold text-slate-500">Voorbeeldzin (NL):</div>
+                            <div class="italic text-slate-700 dark:text-slate-300">"${item.exNL}"</div>
+                            <div class="font-semibold text-slate-500 pt-1">Voorbeeldzin (PAP):</div>
+                            <div class="italic text-slate-700 dark:text-slate-300">"${item.exPAP}"</div>
+                        </div>
+                        ` : ''}
+                    </div>
+
+                </div>
+            `;
+
+            lucide.createIcons();
+        }
+
+        // FAVORITEN BEHEREN
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(f => f !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('uoc_favs', JSON.stringify(favorites));
+            updateFavCount();
+            if (selectedTermId === id) selectTerm(id);
+        }
+
+        function updateFavCount() {
+            document.getElementById('fav-count').innerText = favorites.length;
+        }
+
+        function renderFavorites() {
+            const container = document.getElementById('favorites-list');
+            const favItems = dictionary.filter(i => favorites.includes(i.id));
+
+            if (favItems.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 text-center py-12 text-slate-400">
+                        <i data-lucide="bookmark-x" class="w-10 h-10 mx-auto mb-2 opacity-50"></i>
+                        <p class="text-sm">Je hebt nog geen juridische termen bewaard.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = favItems.map(item => `
+                <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 relative">
+                    <button onclick="toggleFavorite('${item.id}'); renderFavorites();" class="absolute top-3 right-3 text-amber-500">
+                        <i data-lucide="bookmark" class="w-4 h-4 fill-amber-500"></i>
+                    </button>
+                    <h4 class="font-bold text-base text-slate-900 dark:text-white">${item.nl}</h4>
+                    <p class="text-sm font-semibold text-uoc-teal mb-2">${item.pap} <span class="text-amber-500">${item.papPlural || ''}</span></p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-2">${item.defNL}</p>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function clearFavorites() {
+            favorites = [];
+            localStorage.removeItem('uoc_favs');
+            updateFavCount();
+            renderFavorites();
+        }
+
+        // ALFABETISCHE INDEX
+        function renderAlphabetBar() {
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            const bar = document.getElementById('alphabet-bar');
+
+            bar.innerHTML = alphabet.map(letter => `
+                <button onclick="selectAlphabetLetter('${letter}')" 
+                    class="w-8 h-8 rounded-lg font-bold text-xs transition ${
+                        letter === currentLetter 
+                        ? 'bg-uoc-blue text-white dark:bg-uoc-teal' 
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200'
+                    }">
+                    ${letter}
+                </button>
+            `).join('');
+        }
+
+        function selectAlphabetLetter(letter) {
+            currentLetter = letter;
+            renderAlphabetBar();
+            renderAlphabetResults();
+        }
+
+        function renderAlphabetResults() {
+            document.getElementById('alphabet-title').innerText = `Letter ${currentLetter}`;
+            const container = document.getElementById('alphabet-results');
+
+            const filtered = dictionary.filter(item => item.nl.toUpperCase().startsWith(currentLetter));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-2 text-center py-8 text-slate-400">
+                        <p class="text-sm">Geen termen gevonden die beginnen met de letter "${currentLetter}".</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div onclick="switchTab('search'); selectTerm('${item.id}');" class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg hover:border-uoc-teal border border-transparent cursor-pointer">
+                    <span class="font-bold text-sm text-slate-900 dark:text-white">${item.nl}</span>
+                    <span class="text-xs text-slate-500 block">${item.pap} ${item.papPlural || ''}</span>
+                </div>
+            `).join('');
+        }
+
+        // TERM TOEVOEGEN
+        function handleAddTerm(e) {
+            e.preventDefault();
+
+            const nl = document.getElementById('add-nl').value;
+            const pap = document.getElementById('add-pap').value;
+            const papPlural = document.getElementById('add-pap-plural').value || '()';
+            const grammar = document.getElementById('add-grammar').value;
+            const category = document.getElementById('add-category').value;
+            const jurisdiction = document.getElementById('add-jurisdiction').value || 'Alle jurisdicties';
+            const defNL = document.getElementById('add-def-nl').value;
+            const defPAP = document.getElementById('add-def-pap').value;
+
+            const newItem = {
+                id: 'custom-' + Date.now(),
+                nl,
+                pap,
+                papPlural,
+                grammar,
+                category,
+                jurisdiction,
+                defNL,
+                defPAP,
+                exNL: '',
+                exPAP: ''
+            };
+
+            dictionary.push(newItem);
+
+            // Sla op in LocalStorage
+            const storedCustom = JSON.parse(localStorage.getItem('uoc_custom_terms') || '[]');
+            storedCustom.push(newItem);
+            localStorage.setItem('uoc_custom_terms', JSON.stringify(storedCustom));
+
+            alert('Nieuwe juridische term succesvol toegevoegd aan het woordenboek!');
+            document.getElementById('add-term-form').reset();
+
+            renderSearchResults();
+            switchTab('search');
+            selectTerm(newItem.id);
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dictionary, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "dikshonario_huridiko_uoc.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // DARK MODE TOGGLE
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                icon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
